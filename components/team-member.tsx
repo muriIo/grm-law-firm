@@ -30,10 +30,10 @@ export default function TeamMember({ name, role, background, image, alternate = 
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           if (nextElementToAnimate == 'right') {
-            entry.target.classList.add("motion-safe:animate-slide-in-right", "[animation-delay:200ms]");
+            entry.target.classList.add("md:motion-safe:animate-slide-in-right", "md:[animation-delay:200ms]");
             nextElementToAnimate = 'left';
           } else if (nextElementToAnimate == 'left') {
-            entry.target.classList.add("motion-safe:animate-slide-in-left", "[animation-delay:200ms]");
+            entry.target.classList.add("md:motion-safe:animate-slide-in-left", "md:[animation-delay:200ms]");
             nextElementToAnimate = 'right';
           }
 
