@@ -40,7 +40,7 @@ export default function Hero() {
       </div>
 
       <div className="hidden md:block md:absolute md:left-1/2 md:-translate-x-1/2 md:bottom-8 md:animate-bounce">
-        <LucideChevronsDown size={70} />
+        <LucideChevronsDown size={30} />
       </div>
     </section>
   )
