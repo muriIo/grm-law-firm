@@ -96,11 +96,12 @@ export default function ContactForm() {
           className="w-full px-4 py-3 bg-card border border-border rounded-lg text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary"
         >
           <option value="">Selecione um assunto</option>
-          <option value="empresarial">Direito Empresarial</option>
-          <option value="trabalhista">Direito Trabalhista</option>
-          <option value="previdenciario">Direito Previdenciário</option>
-          <option value="civil">Direito Civil</option>
-          <option value="administrativo">Direito Administrativo</option>
+          <option value="terceiroSetor">Terceiro Setor</option>
+          <option value="empresarial">Empresarial</option>
+          <option value="trabalhista">Trabalhista e Sindical</option>
+          <option value="previdenciario">Previdenciário</option>
+          <option value="civil">Cível</option>
+          <option value="administrativo">Administrativo</option>
           <option value="outro">Outro</option>
         </select>
       </div>
@@ -123,11 +124,10 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${
-          submitted
+        className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${submitted
             ? "bg-secondary/50 text-primary cursor-not-allowed"
             : "bg-secondary text-primary hover:bg-secondary/90"
-        }`}
+          }`}
         disabled={submitted}
       >
         {submitted ? "Mensagem Enviada!" : "Enviar Mensagem"}

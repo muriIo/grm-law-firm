@@ -20,7 +20,7 @@ export default function TeamMember({ name, role, background, image, alternate = 
           className={`border-4 border-secondary rounded-2xl overflow-hidden aspect-square relative ${alternate ? "md:order-2" : "md:order-1"}`}
         >
           <Image
-            src={image || "/placeholder.jpg"}
+            src={image || "/placeholder_lawyer.png"}
             alt={name}
             fill
             className="object-cover"

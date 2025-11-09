@@ -7,7 +7,7 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ title, description, icon }: ServiceCardProps) {
-  const whatsappMessage = encodeURIComponent(`Olá! Tenho interesse em saber mais sobre ${title}.`)
+  const whatsappMessage = encodeURIComponent(`Olá! Tenho interesse em saber mais sobre serviços: ${title}.`)
   const whatsappLink = `https://wa.me/?text=${whatsappMessage}`
 
   return (

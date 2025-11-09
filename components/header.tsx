@@ -31,11 +31,11 @@ export default function Header({ activeSection }: HeaderProps) {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 backdrop-blur-md shadow-lg" : "bg-transparent"}`}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/80 backdrop-blur-md shadow-lg" : "bg-transparent"}`}
     >
       <nav className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
         <Link href="#hero" className="flex items-center gap-2">
-          <div className="w-15 h-15 bg-secondary rounded-lg flex items-center justify-center">
+          <div className="w-15 h-15 bg-tertiary rounded-lg flex items-center justify-center overflow-hidden">
             <Image
               src={"/logo.png"}
               alt={'Logo da Sociedade de Advogados Gutierrez, Ribeiro & Mazzetto'}
@@ -52,7 +52,7 @@ export default function Header({ activeSection }: HeaderProps) {
             <li key={item.id}>
               <Link
                 href={`#${item.id}`}
-                className={`text-lg font-medium transition-colors ${activeSection === item.id ? "text-secondary" : "text-tertiary/70 hover:text-tertiary"
+                className={`text-lg font-medium transition-colors ${activeSection === item.id ? "text-secondary" : "text-tertiary/80 hover:text-tertiary"
                   }`}
               >
                 {item.label}
