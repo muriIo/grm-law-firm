@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { useEffect } from 'react'
 
 interface TeamMemberProps {
   name: string
@@ -21,8 +22,31 @@ export default function TeamMember({ name, role, background, image, alternate = 
   const wrapper = alternateVariants[wrapperKey];
   const content = alternateVariants[contentKey];
 
+  useEffect(() => {
+    const elements = document.querySelectorAll(".on-scroll-animate");
+    let nextElementToAnimate = 'right';
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (nextElementToAnimate == 'right') {
+            entry.target.classList.add("motion-safe:animate-slide-in-right", "[animation-delay:200ms]");
+            nextElementToAnimate = 'left';
+          } else if (nextElementToAnimate == 'left') {
+            entry.target.classList.add("motion-safe:animate-slide-in-left", "[animation-delay:200ms]");
+            nextElementToAnimate = 'right';
+          }
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 }); // Trigger when 20% of the element is visible
+
+    elements.forEach((el) => observer.observe(el));
+  });
+
   return (
-    <div className={`grid md:grid-cols-2 gap-8 items-center relative z-50`}>
+    <div className={`grid md:grid-cols-2 gap-8 items-center relative z-50 on-scroll-animate md:opacity-0`}>
 
       {/* Content wrapper */}
       <div className={wrapper}>
