@@ -31,7 +31,7 @@ export default function Header({ activeSection }: HeaderProps) {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/80 backdrop-blur-md shadow-lg" : "bg-transparent"}`}
+      className={`fixed top-0 w-full z-100 transition-all duration-300 ${isScrolled ? "bg-primary/80 backdrop-blur-md shadow-lg" : "bg-transparent"}`}
     >
       <nav className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
         <Link href="#hero" className="flex items-center gap-2">
@@ -63,7 +63,7 @@ export default function Header({ activeSection }: HeaderProps) {
 
         <Link
           href="#contact"
-          className="hidden md:block px-6 py-2 bg-secondary text-primary rounded-lg font-medium hover:bg-secondary/90 transition-colors"
+          className="px-6 py-2 bg-secondary text-primary rounded-lg font-medium hover:bg-secondary/90 transition-colors"
         >
           Contato
         </Link>

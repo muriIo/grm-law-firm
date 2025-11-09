@@ -6,7 +6,7 @@ export default function Contact() {
     <section id="contact" className="py-14 px-6 bg-primary-dark scroll-mt-[50px]">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-tertiary mb-4 text-balance text-center">Entre em Contato</h2>
-        <p className="text-tertiary/70 mb-16 md:text-center">
+        <p className="text-tertiary/70 mb-16 text-center">
           Estamos prontos para ajudar você. Entre em contato conosco através de qualquer um dos canais abaixo.
         </p>
 

@@ -38,11 +38,12 @@ export default function Team() {
     <section id="team" className="py-20 px-6 bg-primary scroll-mt-[50px]">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-tertiary mb-4 text-balance text-center">Nosso Time</h2>
-        <p className="text-tertiary/70 mb-16 md:text-center">
+        <p className="text-tertiary/70 mb-16 text-center">
           Conheça os profissionais experientes que compõem nossa equipe.
         </p>
 
-        <div className="space-y-20">
+        <div className="team-container space-y-20">
+
           {teamMembers.map((member, index) => (
             <TeamMember key={index} {...member} alternate={index % 2 === 1} />
           ))}

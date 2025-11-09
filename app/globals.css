@@ -1,4 +1,7 @@
 @import "tailwindcss";
+
+@source inline("{md:,}acrylic-glass");
+
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -132,14 +135,36 @@
   }
 }
 
-/* Acrylic glass effect */
-.acrylic-glass {
-  background: rgba(251, 255, 254, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(212, 162, 74, 0.1);
-}
-
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+@utility acrylic-glass {
+  background: rgba(0, 0, 0, 0.455);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 162, 74, 0.1);
+  border-radius: 10px;
+}
+
+@utility team-container {
+  position: relative;
+  padding: 60px !important;
+
+  @media screen and (min-width: 767px) {
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%);
+      width: 7rem;
+      z-index: 1;
+      background-color: var(--secondary);
+      border-radius: 1rem;
+      box-shadow: 0 8px 12px #00000080;
+    }
+  }
 }
