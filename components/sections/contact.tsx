@@ -3,7 +3,7 @@ import ContactForm from "@/components/contact-form"
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-14 px-6 bg-primary-dark">
+    <section id="contact" className="py-14 px-6 bg-primary-dark scroll-mt-[50px]">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-tertiary mb-4 text-balance text-center">Entre em Contato</h2>
         <p className="text-tertiary/70 mb-16 md:text-center">
