@@ -6,7 +6,7 @@ export default function Contact() {
     <section id="contact" className="py-14 px-6 bg-primary-dark">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-tertiary mb-4 text-balance text-center">Entre em Contato</h2>
-        <p className="text-tertiary/70 mb-16 max-w-2xl">
+        <p className="text-tertiary/70 mb-16 md:text-center">
           Estamos prontos para ajudar você. Entre em contato conosco através de qualquer um dos canais abaixo.
         </p>
 
@@ -59,7 +59,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify- md:justify-start">
               <a
                 href="https://wa.me/5515997304482?text=Olá! Gostaria de agendar uma consulta."
                 target="_blank"

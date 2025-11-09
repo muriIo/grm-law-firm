@@ -8,7 +8,7 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ title, description, icon }: ServiceCardProps) {
   const whatsappMessage = encodeURIComponent(`Olá! Tenho interesse em saber mais sobre serviços: ${title}.`)
-  const whatsappLink = `https://wa.me/?text=${whatsappMessage}`
+  const whatsappLink = `https://wa.me/5515997304482?text=${whatsappMessage}`
 
   return (
     <div className="bg-card border border-border rounded-xl p-8 hover:border-secondary/50 transition-colors group">

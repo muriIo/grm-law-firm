@@ -9,7 +9,7 @@ export default function About() {
             <Image
               src={"/logomarca.png"}
               alt={'Logomarca da Sociedade de Advogados Gutierrez, Ribeiro & Mazzetto'}
-              className="w-full h-full object-cover md:object-contain"
+              className="w-full h-full object-contain"
               width={500}
               height={500}
               loading="lazy"

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import ChevronsDown, { LucideChevronsDown } from "lucide-react";
 
 export default function Hero() {
   const whatsappMessage = encodeURIComponent("Olá! Gostaria de iniciar um atendimento.")
@@ -36,6 +37,10 @@ export default function Hero() {
         >
           Como podemos ajudar?
         </Link>
+      </div>
+
+      <div className="hidden md:block md:absolute md:left-1/2 md:-translate-x-1/2 md:bottom-8 md:animate-bounce">
+        <LucideChevronsDown size={70} />
       </div>
     </section>
   )
