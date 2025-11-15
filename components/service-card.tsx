@@ -11,7 +11,7 @@ export default function ServiceCard({ title, description, icon }: ServiceCardPro
   const whatsappLink = `https://wa.me/5515997304482?text=${whatsappMessage}`
 
   return (
-    <div className="bg-card border border-border rounded-xl p-8 hover:border-secondary/50 transition-colors group">
+    <div className="bg-card border border-border rounded-xl p-8 hover:border-secondary/50 transition-colors group text-justify">
       <div className="text-4xl mb-4">{icon}</div>
       <h3 className="text-xl font-bold text-tertiary mb-3">{title}</h3>
       <p className="text-tertiary/70 mb-6 leading-relaxed">{description}</p>

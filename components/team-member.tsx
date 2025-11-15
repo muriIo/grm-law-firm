@@ -65,7 +65,7 @@ export default function TeamMember({ name, role, background, image, alternate = 
       </div>
 
       {/* Text content */}
-      <div className={`md:acrylic-glass ${content} md:p-5`}>
+      <div className={`md:acrylic-glass ${content} md:p-5 text-justify`}>
         <h3 className="text-3xl md:text-4xl font-bold text-tertiary mb-2">{name}</h3>
         <p className="text-secondary font-semibold mb-4">{role}</p>
         <p className="text-tertiary/80 leading-relaxed text-pretty">{background}</p>

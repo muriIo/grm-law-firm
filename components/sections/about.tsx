@@ -21,7 +21,7 @@ export default function About() {
               <h2 className="text-4xl md:text-5xl font-bold text-tertiary mb-8 text-balance text-center">Sobre Nós</h2>
             </div>
 
-            <div className="space-y-4 text-tertiary/90 leading-relaxed">
+            <div className="space-y-4 text-tertiary/90 leading-relaxed text-justify">
               <p>
                 Nossa história é feita de conhecimento, união e compromisso.
               </p>

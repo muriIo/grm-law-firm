@@ -15,7 +15,7 @@ export default function Hero() {
 
       <div className="relative flex flex-col items-center gap-10 z-10 max-w-5xl mx-auto text-center rounded-xl bg-tertiary/10 px-2 py-4 md:p-10">
         <div>
-          <h1 className="text-[20px] md:text-5xl font-bold text-secondary text-balance underline">
+          <h1 className="text-[20px] md:text-5xl font-bold text-secondary text-balance underline underline-offset-[0.5rem] decoration-[0.05rem]">
             Gutierrez, Ribeiro & Mazzetto
           </h1>
           <p className="text-[14px] md:text-xl text-secondary font-medium">SOCIEDADE DE ADVOGADOS</p>
@@ -39,7 +39,7 @@ export default function Hero() {
         </Link>
       </div>
 
-      <div className="hidden md:block md:absolute md:left-1/2 md:-translate-x-1/2 md:bottom-8 md:animate-bounce">
+      <div className="hidden md:block md:absolute md:left-1/2 md:-translate-x-1/2 md:bottom-4 md:animate-bounce">
         <LucideChevronsDown size={30} />
       </div>
     </section>
