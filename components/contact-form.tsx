@@ -78,10 +78,10 @@ export default function ContactForm() {
     } catch (error) {
       console.error('Erro de rede:', error);
     } finally {
+      setIsLoading(false);
       setTimeout(() => {
         setFormData({ name: "", email: "", phone: "", subject: "", message: "" })
         setSubmitted(false);
-        setIsLoading(false);
       }, 2000);
     }
 
