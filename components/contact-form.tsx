@@ -4,8 +4,16 @@ import type React from "react"
 
 import { useState } from "react"
 
+type ContactFormData = {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     phone: "",
@@ -13,7 +21,8 @@ export default function ContactForm() {
     message: "",
   })
 
-  const [submitted, setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -23,15 +32,57 @@ export default function ContactForm() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Here you would typically send the form data to your backend
-    console.log("Form submitted:", formData)
-    setSubmitted(true)
-    setTimeout(() => {
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" })
-      setSubmitted(false)
-    }, 2000)
+  const validateForm = () => {
+    const keys = Object.keys(formData);
+
+    for (const key of keys) {
+      const value = formData[key as keyof ContactFormData];
+
+      if (value && value.trim() != "") {
+        formData[key as keyof ContactFormData] = value.trim();
+
+        continue;
+      }
+
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (isLoading)
+      return;
+
+    if (!validateForm())
+      return;
+
+    try {
+      setIsLoading(true);
+
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitted(true);
+      }
+    } catch (error) {
+      console.error('Erro de rede:', error);
+    } finally {
+      setTimeout(() => {
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" })
+        setSubmitted(false);
+        setIsLoading(false);
+      }, 2000);
+    }
+
   }
 
   return (
@@ -96,13 +147,13 @@ export default function ContactForm() {
           className="w-full px-4 py-3 bg-card border border-border rounded-lg text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary"
         >
           <option value="">Selecione um assunto</option>
-          <option value="terceiroSetor">Terceiro Setor</option>
-          <option value="empresarial">Empresarial</option>
-          <option value="trabalhista">Trabalhista e Sindical</option>
-          <option value="previdenciario">Previdenciário</option>
-          <option value="civil">Cível</option>
-          <option value="administrativo">Administrativo</option>
-          <option value="outro">Outro</option>
+          <option value="Terceiro Setor">Terceiro Setor</option>
+          <option value="Empresarial">Empresarial</option>
+          <option value="Trabalhista">Trabalhista e Sindical</option>
+          <option value="Previdenciário">Previdenciário</option>
+          <option value="Cível">Cível</option>
+          <option value="Administrativo">Administrativo</option>
+          <option value="Outro">Outro</option>
         </select>
       </div>
 
@@ -124,13 +175,13 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${submitted
-            ? "bg-secondary/50 text-primary cursor-not-allowed"
-            : "bg-secondary text-primary hover:bg-secondary/90"
+        className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${isLoading
+          ? "bg-secondary/50 text-primary cursor-not-allowed"
+          : "bg-secondary text-primary hover:bg-secondary/90"
           }`}
-        disabled={submitted}
+        disabled={isLoading}
       >
-        {submitted ? "Mensagem Enviada!" : "Enviar Mensagem"}
+        {isLoading ? 'Enviando...' : submitted ? "Mensagem Enviada!" : "Enviar Mensagem"}
       </button>
     </form>
   )

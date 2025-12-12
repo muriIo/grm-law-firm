@@ -31,6 +31,12 @@ const teamMembers = [
     background: "Estudante de Direito.",
     image: "/jean.jpeg",
   },
+  {
+    name: "Gabriel Angelo",
+    role: "Estagiário",
+    background: "Estudante de Direito.",
+    image: '/gabriel.jpeg',
+  },
 ]
 
 export default function Team() {
