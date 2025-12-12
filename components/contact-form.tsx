@@ -62,15 +62,24 @@ export default function ContactForm() {
     try {
       setIsLoading(true);
 
+
+      if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || !window.grecaptcha)
+        throw new Error('Recaptcha site key not found');
+
+      const token = await window.grecaptcha.execute(
+        process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+        { action: "submit" }
+      );
+
       const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, token }),
       });
 
-      const data = await response.json();
+      await response.json();
 
       if (response.ok) {
         setSubmitted(true);
@@ -176,8 +185,11 @@ export default function ContactForm() {
       </div>
 
       <button
+        data-sitekey="6LenlCksAAAAAPGBBL3RvV7mLSQTyFuWeNwuJBEk"
+        data-callback='onSubmit'
+        data-action='submit'
         type="submit"
-        className={`w-full px-6 py-3 rounded-lg font-semibold transition-colors ${isLoading
+        className={`g-recaptcha w-full px-6 py-3 rounded-lg font-semibold transition-colors ${isLoading
           ? "bg-secondary/50 text-primary cursor-not-allowed"
           : "bg-secondary text-primary hover:bg-secondary/90"
           }`}

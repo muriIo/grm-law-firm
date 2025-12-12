@@ -8,7 +8,7 @@ if (!process.env.SENDGRID_API_KEY || !process.env.CLIENT_EMAIL_ADDRESS || !proce
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function handler(req: any, res: any) {
-  if (!process.env.CLIENT_EMAIL_ADDRESS || !process.env.EMAIL_FROM) {
+  if (!process.env.CLIENT_EMAIL_ADDRESS || !process.env.EMAIL_FROM || !process.env.RECAPTCHA_SECRET_KEY) {
 
     return res.status(500).json({ message: 'Erro ao enviar a mensagem.', details: 'Variable not set' });
   }
@@ -20,10 +20,27 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { name, email, phone, subject, message } = req.body;
+    const { name, email, phone, subject, message, token } = req.body;
+    const secret = process.env.RECAPTCHA_SECRET_KEY;
 
     if (!name || !email || !phone || !subject || !message) {
       return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+    }
+
+    // Verifica token com o Google
+    const verifyRes = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `secret=${secret}&response=${token}`,
+      }
+    );
+
+    const data = await verifyRes.json();
+
+    if (!data.success || data.score < 0.5) {
+      return res.status(400).json({ message: 'Não foi possível validar o recaptcha.' })
     }
 
     const htmlContent = `
