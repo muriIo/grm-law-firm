@@ -46,6 +46,8 @@ export default function ContactForm() {
 
       return false;
     }
+
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
