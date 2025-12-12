@@ -189,7 +189,7 @@ export default function ContactForm() {
         data-callback='onSubmit'
         data-action='submit'
         type="submit"
-        className={`g-recaptcha w-full px-6 py-3 rounded-lg font-semibold transition-colors ${isLoading
+        className={`g-recaptcha cursor-pointer w-full px-6 py-3 rounded-lg font-semibold transition-colors ${isLoading
           ? "bg-secondary/50 text-primary cursor-not-allowed"
           : "bg-secondary text-primary hover:bg-secondary/90"
           }`}
