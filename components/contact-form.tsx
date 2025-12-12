@@ -1,8 +1,9 @@
 "use client"
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
+import { useState } from "react";
+import PhoneInput from './inputs';
 
 type ContactFormData = {
   name: string;
@@ -29,6 +30,13 @@ export default function ContactForm() {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }))
+  }
+
+  const handlePhoneChange = (e: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      phone: e,
     }))
   }
 
@@ -111,6 +119,7 @@ export default function ContactForm() {
           required
           className="w-full px-4 py-3 bg-card border border-border rounded-lg text-tertiary placeholder-tertiary/50 focus:outline-none focus:ring-2 focus:ring-secondary"
           placeholder="Seu nome completo"
+          maxLength={300}
         />
       </div>
 
@@ -127,6 +136,7 @@ export default function ContactForm() {
           required
           className="w-full px-4 py-3 bg-card border border-border rounded-lg text-tertiary placeholder-tertiary/50 focus:outline-none focus:ring-2 focus:ring-secondary"
           placeholder="seu@email.com"
+          maxLength={300}
         />
       </div>
 
@@ -134,15 +144,7 @@ export default function ContactForm() {
         <label htmlFor="phone" className="block text-sm font-medium text-tertiary mb-2">
           Celular (WhatsApp)
         </label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          className="w-full px-4 py-3 bg-card border border-border rounded-lg text-tertiary placeholder-tertiary/50 focus:outline-none focus:ring-2 focus:ring-secondary"
-          placeholder="(11) 99999-9999"
-        />
+        <PhoneInput onChange={handlePhoneChange} />
       </div>
 
       <div>
@@ -181,6 +183,7 @@ export default function ContactForm() {
           rows={5}
           className="w-full px-4 py-3 bg-card border border-border rounded-lg text-tertiary placeholder-tertiary/50 focus:outline-none focus:ring-2 focus:ring-secondary resize-none"
           placeholder="Descreva sua dúvida ou necessidade..."
+          maxLength={500}
         />
       </div>
 
