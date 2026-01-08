@@ -144,7 +144,7 @@ export default function ContactForm() {
         <label htmlFor="phone" className="block text-sm font-medium text-tertiary mb-2">
           Celular (WhatsApp)
         </label>
-        <PhoneInput onChange={handlePhoneChange} />
+        <PhoneInput value={formData.phone} onChange={handlePhoneChange} />
       </div>
 
       <div>
@@ -188,7 +188,7 @@ export default function ContactForm() {
       </div>
 
       <button
-        data-sitekey="6LenlCksAAAAAPGBBL3RvV7mLSQTyFuWeNwuJBEk"
+        data-sitekey="6LfKtSksAAAAAD8DVzKXXSt1hBGYgeHF4SV_AdmD"
         data-callback='onSubmit'
         data-action='submit'
         type="submit"

@@ -1,14 +1,9 @@
 // pages/api/send-email.js
 
-import sgMail, { MailDataRequired } from '@sendgrid/mail';
-
-if (!process.env.SENDGRID_API_KEY || !process.env.CLIENT_EMAIL_ADDRESS || !process.env.EMAIL_FROM)
-  process.exit(1);
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+import { sendEmail } from "@/lib/send-email";
 
 export default async function handler(req: any, res: any) {
-  if (!process.env.CLIENT_EMAIL_ADDRESS || !process.env.EMAIL_FROM || !process.env.RECAPTCHA_SECRET_KEY) {
+  if (!process.env.CLIENT_EMAIL_ADDRESS || !process.env.RECAPTCHA_SECRET_KEY) {
 
     return res.status(500).json({ message: 'Erro ao enviar a mensagem.', details: 'Variable not set' });
   }
@@ -58,15 +53,11 @@ export default async function handler(req: any, res: any) {
             </div>
         `;
 
-    const msg: MailDataRequired = {
+    await sendEmail({
       to: process.env.CLIENT_EMAIL_ADDRESS,
-      from: process.env.EMAIL_FROM,
-      replyTo: email,
       subject: `[Contato - GRM Sociedade de Advogados] ${subject}`,
       html: htmlContent,
-    };
-
-    await sgMail.send(msg);
+    });
 
     return res.status(200).json({ message: 'Mensagem enviada com sucesso!' });
 
