@@ -62,11 +62,11 @@ export default async function handler(req: any, res: any) {
     return res.status(200).json({ message: 'Mensagem enviada com sucesso!' });
 
   } catch (error: any) {
-    console.error('Erro ao enviar e-mail com SendGrid:', error);
+    console.error('Erro ao enviar e-mail com AWS SES:', error);
 
     const errorMessage = error.response && error.response.body && error.response.body.errors
       ? error.response.body.errors.map((e: any) => e.message).join('; ')
-      : 'Erro desconhecido do SendGrid.';
+      : 'Erro desconhecido do AWS SES.';
 
     return res.status(500).json({ message: 'Erro ao enviar a mensagem.', details: errorMessage });
   }
