@@ -22,7 +22,7 @@ export default function ContactForm() {
   useEffect(() => {
     const container = document.querySelector('#cf-turnstile-container');
 
-    if (!container)
+    if (!container || !window.turnstile || !window.turnstile.render)
       return;
 
     window.turnstile.render(container, {
@@ -113,7 +113,7 @@ export default function ContactForm() {
     } finally {
       const container = document.querySelector('#cf-turnstile-container');
 
-      if (container) {
+      if (container && window.turnstile && window.turnstile.reset) {
         window.turnstile.reset(container);
       }
 
