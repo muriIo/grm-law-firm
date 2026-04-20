@@ -4,7 +4,13 @@ import { Analytics } from "@vercel/analytics/next";
 
 import "./globals.css";
 
-if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY)
+declare global {
+  interface Window {
+    turnstile?: any;
+  }
+}
+
+if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
   process.exit(1);
 
 export const metadata: Metadata = {
@@ -34,8 +40,11 @@ export default function RootLayout({
     <html lang="pt-BR" scroll-behavior="smooth">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://challenges.cloudflare.com" />
         <script
-          src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          async
+          defer
         ></script>
       </head>
       <body className={`font-sans antialiased`}>

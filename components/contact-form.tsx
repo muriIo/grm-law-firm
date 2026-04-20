@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneInput from './inputs';
 
 type ContactFormData = {
@@ -14,6 +14,28 @@ type ContactFormData = {
 }
 
 export default function ContactForm() {
+  if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+    throw new Error('Turnstile site key not found');
+
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+  useEffect(() => {
+    const container = document.querySelector('#cf-turnstile-container');
+
+    if (!container)
+      return;
+
+    window.turnstile.render(container, {
+      sitekey: siteKey,
+      appearance: 'always',
+      theme: 'dark',
+      callback: onTurnstileSuccess,
+      'expired-callback': onTurnstileExpired,
+      'error-callback': onTurnstileError,
+    });
+  }, []);
+
+
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -24,6 +46,7 @@ export default function ContactForm() {
 
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -70,14 +93,7 @@ export default function ContactForm() {
     try {
       setIsLoading(true);
 
-
-      if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || !window.grecaptcha)
-        throw new Error('Recaptcha site key not found');
-
-      const token = await window.grecaptcha.execute(
-        process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-        { action: "submit" }
-      );
+      if (!token) throw new Error('Turnstile token not found');
 
       const response = await fetch('/api/send-email', {
         method: 'POST',
@@ -95,6 +111,12 @@ export default function ContactForm() {
     } catch (error) {
       console.error('Erro de rede:', error);
     } finally {
+      const container = document.querySelector('#cf-turnstile-container');
+
+      if (container) {
+        window.turnstile.reset(container);
+      }
+
       setIsLoading(false);
       setTimeout(() => {
         setFormData({ name: "", email: "", phone: "", subject: "", message: "" })
@@ -102,6 +124,19 @@ export default function ContactForm() {
       }, 2000);
     }
 
+  }
+
+  const onTurnstileSuccess = (token: string) => {
+    console.log("Turnstile success:", token);
+    setToken(token);
+  }
+  const onTurnstileError = (errorCode: string) => {
+    console.error("Turnstile error:", errorCode);
+    setToken(null);
+  }
+  const onTurnstileExpired = () => {
+    console.warn("Turnstile token expired");
+    setToken(null);
   }
 
   return (
@@ -187,12 +222,11 @@ export default function ContactForm() {
         />
       </div>
 
+      <div className='flex justify-center items-center' id="cf-turnstile-container"></div>
+
       <button
-        data-sitekey="6LfKtSksAAAAAD8DVzKXXSt1hBGYgeHF4SV_AdmD"
-        data-callback='onSubmit'
-        data-action='submit'
         type="submit"
-        className={`g-recaptcha cursor-pointer w-full px-6 py-3 rounded-lg font-semibold transition-colors ${isLoading
+        className={`cursor-pointer w-full px-6 py-3 rounded-lg font-semibold transition-colors ${isLoading
           ? "bg-secondary/50 text-primary cursor-not-allowed"
           : "bg-secondary text-primary hover:bg-secondary/90"
           }`}
