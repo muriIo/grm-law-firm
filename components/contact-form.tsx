@@ -127,7 +127,6 @@ export default function ContactForm() {
   }
 
   const onTurnstileSuccess = (token: string) => {
-    console.log("Turnstile success:", token);
     setToken(token);
   }
   const onTurnstileError = (errorCode: string) => {
