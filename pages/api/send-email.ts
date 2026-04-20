@@ -3,7 +3,7 @@
 import { sendEmail } from "@/lib/send-email";
 
 export default async function handler(req: any, res: any) {
-  if (!process.env.CLIENT_EMAIL_ADDRESS || !process.env.RECAPTCHA_SECRET_KEY) {
+  if (!process.env.CLIENT_EMAIL_ADDRESS || !process.env.TURNSTILE_SECRET_KEY) {
 
     return res.status(500).json({ message: 'Erro ao enviar a mensagem.', details: 'Variable not set' });
   }
@@ -16,15 +16,14 @@ export default async function handler(req: any, res: any) {
 
   try {
     const { name, email, phone, subject, message, token } = req.body;
-    const secret = process.env.RECAPTCHA_SECRET_KEY;
+    const secret = process.env.TURNSTILE_SECRET_KEY;
 
     if (!name || !email || !phone || !subject || !message) {
       return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
     }
 
-    // Verifica token com o Google
     const verifyRes = await fetch(
-      `https://www.google.com/recaptcha/api/siteverify`,
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
       {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -34,8 +33,8 @@ export default async function handler(req: any, res: any) {
 
     const data = await verifyRes.json();
 
-    if (!data.success || data.score < 0.5) {
-      return res.status(400).json({ message: 'Não foi possível validar o recaptcha.' })
+    if (!data.success) {
+      return res.status(400).json({ message: 'Não foi possível validar o turnstile.' })
     }
 
     const htmlContent = `
@@ -62,11 +61,9 @@ export default async function handler(req: any, res: any) {
     return res.status(200).json({ message: 'Mensagem enviada com sucesso!' });
 
   } catch (error: any) {
-    console.error('Erro ao enviar e-mail com AWS SES:', error);
+    console.error('Erro ao enviar e-mail:', error);
 
-    const errorMessage = error.response && error.response.body && error.response.body.errors
-      ? error.response.body.errors.map((e: any) => e.message).join('; ')
-      : 'Erro desconhecido do AWS SES.';
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido.';
 
     return res.status(500).json({ message: 'Erro ao enviar a mensagem.', details: errorMessage });
   }
