@@ -46,7 +46,7 @@ export default function TeamMember({ name, role, background, image, alternate = 
   });
 
   return (
-    <div className={`grid md:grid-cols-2 gap-8 items-center relative z-50 on-scroll-animate md:opacity-0`}>
+    <div className={`grid md:grid-cols-2 gap-8 items-center relative z-50`}>
 
       {/* Content wrapper */}
       <div className={wrapper}>
